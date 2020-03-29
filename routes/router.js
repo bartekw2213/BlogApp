@@ -2,14 +2,16 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
+const isAuthenticated = require('../additionalFuncs/isAuthenticated');
+const isNotAuthenticated = require('../additionalFuncs/isNotAuthenticated');
 
 const User = require('../models/User');
 
-router.get('/', (req, res) => res.render('index'));
+router.get('/', isNotAuthenticated, (req, res) => res.render('index'));
 
-router.get('/logged', (req, res) => res.send('Welcome'));
+router.get('/logged', isAuthenticated, (req, res) => res.render('indexLogged'));
 
-router.get('/register', (req, res) => res.render('register', { errMsg: req.flash('error'), succMsg: req.flash('succMsg') }));
+router.get('/register', isNotAuthenticated, (req, res) => res.render('register', { errMsg: req.flash('error'), succMsg: req.flash('succMsg') }));
 
 router.post('/register', async (req, res) => {
     const { username, email, password1, password2 } = req.body;
@@ -20,8 +22,8 @@ router.post('/register', async (req, res) => {
         return res.redirect('/register');
     }
     // Checking password length
-    if(password1.length < 8 || password1.length > 25) {
-        req.flash('error', 'Password have to be at least 9 and no longer than 25 characters');
+    if(password1.length < 5 || password1.length > 25) {
+        req.flash('error', 'Password have to be at least 5 and no longer than 25 characters');
         return res.redirect('/register');
     }
     // Check if user already exists by email
@@ -56,12 +58,19 @@ router.post('/register', async (req, res) => {
     });
 })
 
-router.get('/login', (req, res) => res.render('login', { errMsg: req.flash('error'), succMsg: req.flash('succMsg') }));
+router.get('/login', isNotAuthenticated, (req, res) => res.render('login', { errMsg: req.flash('error'), succMsg: req.flash('succMsg') }));
 
 router.post('/login', passport.authenticate('local', {
     successRedirect: '/logged',
     failureRedirect: '/login',
     failureFlash: true
 }))
+
+router.get('/logout', (req, res) => {
+    req.logout();
+    res.redirect('/login')
+})
+
+router.get('/addPost', isAuthenticated, (req, res) => res.render('addPost', { errMsg: req.flash('error'), succMsg: req.flash('succMsg') }))
 
 module.exports = router;

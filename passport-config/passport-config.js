@@ -19,7 +19,7 @@ function passportConfig(passport) {
         });
     };
 
-    passport.use(new LocalStrategy(authentication));
+    passport.use(new LocalStrategy({usernameField: 'username', passwordField: 'password'}, authentication));
 
     passport.serializeUser(function(user, done) {
         done(null, user.id);

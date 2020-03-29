@@ -18,8 +18,6 @@ mongoose.connect(require('./config/atlasURI').URI, {
 
 app.set('view engine', 'ejs');
 
-// Bringing the passport configuration
-passportConfig(passport);
 
 // Middlewares
 app.use(express.urlencoded({extended: false}));
@@ -32,6 +30,9 @@ app.use(session({
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
+
+// Bringing the passport configuration
+passportConfig(passport);
 
 // Routing
 app.use('/', require('./routes/router'));
