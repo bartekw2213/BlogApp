@@ -3,9 +3,28 @@
 <%- include('partials/head'); -%> 
 <body>
     <%- include('partials/navbarLogged'); -%> 
+    <%- include('partials/messages'); -%> 
     <div class="container py-5">
         <h1 class="display-4 mb-3">Welcome on our blog page</h1>
         <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Possimus natus quaerat consectetur sapiente at eum veritatis repudiandae repellat quo eos veniam, voluptatum cumque ullam accusamus quas corporis nisi sequi quis nulla? Fugit veniam eos aliquid odio eius perferendis reprehenderit accusamus. Voluptates quisquam deserunt est, dignissimos laborum illum explicabo rem dolorum.</p>
+        <% posts.forEach(post => { %>
+            <div class="card my-2">
+                <div class="card-header">
+                  Created by <%= post.author %>
+                  <br>
+                  <small class="text-muted"><%= post.date %></small>
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title"><%= post.title %></h5>
+                  <p class="card-text"><%= post.description %></p>
+                  <a href="/logged/post/<%= post._id %>" class="btn btn-primary">Read more</a>
+                  <a class="btn btn-warning" href="/logged/post/edit/<%= post.id %>">Edit</a>
+                  <form action="/logged/post/delete/<%= post._id %>?_method=DELETE" method="POST" class="d-inline">
+                    <button class="btn btn-danger" type="submit">Delete</button>
+                  </form>
+                </div>
+            </div>
+        <% }) %>
     </div>
 
     <%- include('partials/bootstrapJS'); -%> 

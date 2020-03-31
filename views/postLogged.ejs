@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('partials/head'); -%> 
+<body>
+    <%- include('partials/navbarLogged'); -%> 
+    <div class="container py-5">
+        <h2 class="display-4"><%= post.title %></h2>
+        <p><%= post.markdown %></p>
+        <small class="text-muted d-block mb-3"><i><%= post.author %></i></small>
+        <a class="btn btn-success" href="/logged">All Articles</a>
+        <a class="btn btn-warning" href="/logged/post/edit/<%= post._id %>">Edit</a>
+        <form action="/logged/post/delete/<%= post._id %>?_method=DELETE" method="POST" class="d-inline">
+            <button class="btn btn-danger" type="submit">Delete</button>
+        </form>
+    </div>
+
+    <%- include('partials/bootstrapJS'); -%> 
+</body>
+</html>

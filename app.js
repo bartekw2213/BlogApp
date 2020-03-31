@@ -4,6 +4,7 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const passport = require('passport');
 const passportConfig = require('./passport-config/passport-config');
+const methodOverride = require('method-override');
 
 const app = express();
 
@@ -30,6 +31,7 @@ app.use(session({
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(methodOverride('_method'));
 
 // Bringing the passport configuration
 passportConfig(passport);

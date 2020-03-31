@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('partials/head'); -%> 
+<body>
+    <%- include('partials/navbar'); -%> 
+    <div class="container py-5">
+        <h2 class="display-4"><%= post.title %></h2>
+        <p><%= post.markdown %></p>
+        <small class="text-muted d-block mb-3"><i><%= post.author %></i></small>
+        <a class="btn btn-success" href="/">All Articles</a>
+    </div>
+
+    <%- include('partials/bootstrapJS'); -%> 
+</body>
+</html>
