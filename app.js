@@ -38,6 +38,8 @@ passportConfig(passport);
 
 // Routing
 app.use('/', require('./routes/router'));
+app.use('/logged', require('./routes/sub-routes/logged'));
+app.use('/user', require('./routes/sub-routes/user'));
 
 // Setting server to listen 
 const PORT = process.env.PORT || 3000;

@@ -1,12 +1,17 @@
 const mongoose = require('mongoose');
+const moment = require('moment');
 
 const postSchema = new mongoose.Schema({
     title: String,
     description: String,
     markdown: String,
+    formatedDate: {
+        type: String,
+        default: moment(Date.now()).format('MMMM Do YYYY, h:mm:ss a')
+    },
     date: {
         type: Date,
-        default: new Date().toLocaleDateString()
+        default: Date.now
     },
     author: String
 })
